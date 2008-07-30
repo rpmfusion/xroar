@@ -1,6 +1,6 @@
 Name:           xroar
 Version:        0.21
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
@@ -113,6 +113,9 @@ fi
 
 
 %changelog
+* Wed Jul 30 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.21-2
+- rebuild for buildsys cflags issue
+
 * Sat May 10 2008 Andrea Musuruane <musuruan@gmail.com> 0.21-1
 - Upgrade to 0.21
 
