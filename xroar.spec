@@ -1,12 +1,16 @@
 Name:           xroar
-Version:        0.21
-Release:        3%{?dist}
+Version:        0.23b
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
 URL:            http://www.6809.org.uk/dragon/xroar.shtml
 Source0:        http://www.6809.org.uk/dragon/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
+# Andrea Musuruane
+Patch0:         %{name}-0.23-info.patch
+# Upstream
+Patch1:         %{name}-0.23-SDL_sound.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  desktop-file-utils
 BuildRequires:  gtk2-devel
@@ -16,7 +20,12 @@ BuildRequires:  libGLU-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  pkgconfig
 BuildRequires:  SDL_image-devel
+BuildRequires:  ncurses-devel
+BuildRequires:  texinfo
 Requires:       hicolor-icon-theme
+Requires(post): info
+Requires(preun): info
+
 
 %description
 A Dragon 32, Dragon 64 and Tandy CoCo emulator for Unix, Linux, GP32, MacOS X
@@ -29,12 +38,23 @@ minimal firmware is included.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-0.23
+
+# Fix info dir entry 
+%patch0 -p1
+
+# Fix SDL sound
+%patch1 -p1
 
 
 %build
 %configure
-make %{?_smp_mflags} ROMPATH=\\\".\\\",\\\"~/.%{name}/roms\\\",\\\"%{_datadir}/%{name}/roms\\\"
+make %{?_smp_mflags}
+
+# Build docs
+make doc/xroar.info
+make doc/xroar.txt
+make doc/xroar.html
 
 # Create icon
 convert gp32/icon.bmp -transparent '#000000' %{name}.png
@@ -42,7 +62,6 @@ convert gp32/icon.bmp -transparent '#000000' %{name}.png
 # Generate desktop file
 cat >%{name}.desktop <<EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name=XRoar
 GenericName=Dragon 32/64 Emulator
 Comment=Emulates the Dragon 32/64 and Tandy CoCo
@@ -55,7 +74,6 @@ EOF
 
 cat >%{name}-minifirm.desktop <<EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name=XRoar [Minimal Firmware]
 GenericName=Dragon 32/64 Emulator
 Comment=Emulates the Dragon 32/64 and Tandy CoCo
@@ -69,9 +87,10 @@ EOF
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}%{_bindir}
+make install DEB_BUILD_OPTIONS=nostrip \
+             DESTDIR=%{buildroot}
+
 mkdir -p %{buildroot}%{_datadir}/{%{name}/roms,icons/hicolor/32x32/apps}
-install -pm0755 %{name} %{buildroot}%{_bindir}
 install -pm0644 %{name}.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
 install -pm0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/roms/dragon-minifirm.rom
 
@@ -89,16 +108,25 @@ rm -rf %{buildroot}
 
 
 %post
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
-fi
+/sbin/install-info %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
+
+touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %postun
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+if [ $1 -eq 0 ] ; then
+    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+
+%posttrans
+gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
+
+%preun
+if [ $1 = 0 ] ; then
+  /sbin/install-info --delete %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
 fi
 
 
@@ -109,10 +137,18 @@ fi
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/applications/dribble-%{name}.desktop
 %{_datadir}/applications/dribble-%{name}-minifirm.desktop
-%doc ChangeLog COPYING.GPL COPYING.LGPL-2.1 README
+%{_infodir}/%{name}.info*
+%doc ChangeLog COPYING.GPL COPYING.LGPL-2.1 README 
+%doc doc/%{name}.txt doc/%{name}.html doc/%{name}-screens.png
 
 
 %changelog
+* Sat Dec 05 2009 Andrea Musuruane <musuruan@gmail.com> 0.23b-1
+- Upgrade to 0.23b
+- Used an upstream patch to fix SDL sound
+- Updated icon cache scriptlets
+- Packaged more docs
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0.21-3
 - rebuild for new F11 features
 
