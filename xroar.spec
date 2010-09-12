@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.23b
+Version:        0.24
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
@@ -9,10 +9,7 @@ Source0:        http://www.6809.org.uk/dragon/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
 # Andrea Musuruane
 Patch0:         %{name}-0.23-info.patch
-# Upstream
-Patch1:         %{name}-0.23-SDL_sound.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  desktop-file-utils
 BuildRequires:  gtk2-devel
 BuildRequires:  ImageMagick
 BuildRequires:  jack-audio-connection-kit-devel
@@ -22,6 +19,7 @@ BuildRequires:  pkgconfig
 BuildRequires:  SDL_image-devel
 BuildRequires:  ncurses-devel
 BuildRequires:  texinfo
+BuildRequires:  desktop-file-utils
 Requires:       hicolor-icon-theme
 Requires(post): info
 Requires(preun): info
@@ -38,13 +36,10 @@ minimal firmware is included.
 
 
 %prep
-%setup -q -n %{name}-0.23
+%setup -q
 
 # Fix info dir entry 
 %patch0 -p1
-
-# Fix SDL sound
-%patch1 -p1
 
 
 %build
@@ -90,17 +85,21 @@ rm -rf %{buildroot}
 make install DEB_BUILD_OPTIONS=nostrip \
              DESTDIR=%{buildroot}
 
+# Install ROM and icon
 mkdir -p %{buildroot}%{_datadir}/{%{name}/roms,icons/hicolor/32x32/apps}
 install -pm0644 %{name}.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
 install -pm0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/roms/dragon-minifirm.rom
 
-desktop-file-install --vendor dribble \
-                     --dir %{buildroot}%{_datadir}/applications \
-                     %{name}.desktop
+# Install desktop files
+desktop-file-install \
+  --vendor dribble \
+  --dir %{buildroot}%{_datadir}/applications \
+  %{name}.desktop
 
-desktop-file-install --vendor dribble \
-                     --dir %{buildroot}%{_datadir}/applications \
-                     %{name}-minifirm.desktop
+desktop-file-install \
+  --vendor dribble \
+  --dir %{buildroot}%{_datadir}/applications \
+  %{name}-minifirm.desktop
 
 
 %clean
@@ -143,6 +142,10 @@ fi
 
 
 %changelog
+* Sun Sep 12 2010 Andrea Musuruane <musuruan@gmail.com> 0.24-1
+- Upgrade to 0.24
+- Cosmetic changes
+
 * Sat Dec 05 2009 Andrea Musuruane <musuruan@gmail.com> 0.23b-1
 - Upgrade to 0.23b
 - Used an upstream patch to fix SDL sound
