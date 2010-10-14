@@ -1,6 +1,6 @@
 Name:           xroar
 Version:        0.24
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
@@ -142,6 +142,9 @@ fi
 
 
 %changelog
+* Fri Oct 15 2010 Nicolas Chauvet <kwizart@gmail.com> - 0.24-2
+- Rebuilt for gcc bug
+
 * Sun Sep 12 2010 Andrea Musuruane <musuruan@gmail.com> 0.24-1
 - Upgrade to 0.24
 - Cosmetic changes
