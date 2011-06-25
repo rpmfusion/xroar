@@ -1,24 +1,21 @@
 Name:           xroar
-Version:        0.24
-Release:        2%{?dist}
+Version:        0.25.3
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
 URL:            http://www.6809.org.uk/dragon/xroar.shtml
 Source0:        http://www.6809.org.uk/dragon/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
-# Andrea Musuruane
-Patch0:         %{name}-0.23-info.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  gtk2-devel
-BuildRequires:  ImageMagick
-BuildRequires:  jack-audio-connection-kit-devel
-BuildRequires:  libGLU-devel
-BuildRequires:  libsndfile-devel
-BuildRequires:  pkgconfig
+BuildRequires:  gtkglext-devel
 BuildRequires:  SDL_image-devel
-BuildRequires:  ncurses-devel
+BuildRequires:  libsndfile-devel
+BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  texinfo
+BuildRequires:  texinfo-tex
+BuildRequires:  ImageMagick
 BuildRequires:  desktop-file-utils
 Requires:       hicolor-icon-theme
 Requires(post): info
@@ -38,18 +35,15 @@ minimal firmware is included.
 %prep
 %setup -q
 
-# Fix info dir entry 
-%patch0 -p1
-
 
 %build
 %configure
-make %{?_smp_mflags}
+make %{?_smp_mflags} VERBOSE=1
 
 # Build docs
-make doc/xroar.info
 make doc/xroar.txt
 make doc/xroar.html
+make doc/xroar.pdf
 
 # Create icon
 convert gp32/icon.bmp -transparent '#000000' %{name}.png
@@ -138,10 +132,14 @@ fi
 %{_datadir}/applications/dribble-%{name}-minifirm.desktop
 %{_infodir}/%{name}.info*
 %doc ChangeLog COPYING.GPL COPYING.LGPL-2.1 README 
-%doc doc/%{name}.txt doc/%{name}.html doc/%{name}-screens.png
+%doc doc/%{name}.txt doc/%{name}.html doc/%{name}.pdf doc/%{name}-screens.png
 
 
 %changelog
+* Sat Jun 25 2011 Andrea Musuruane <musuruan@gmail.com> 0.25.3-1
+- Upgrade to 0.25.3
+- Dropped JACK dependency now that pulseaudio is supported
+
 * Fri Oct 15 2010 Nicolas Chauvet <kwizart@gmail.com> - 0.24-2
 - Rebuilt for gcc bug
 
