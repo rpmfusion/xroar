@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.25.3
+Version:        0.26
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
@@ -136,6 +136,9 @@ fi
 
 
 %changelog
+* Tue Aug 02 2011 Andrea Musuruane <musuruan@gmail.com> 0.26-1
+- Upgrade to 0.26
+
 * Sat Jun 25 2011 Andrea Musuruane <musuruan@gmail.com> 0.25.3-1
 - Upgrade to 0.25.3
 - Dropped JACK dependency now that pulseaudio is supported
