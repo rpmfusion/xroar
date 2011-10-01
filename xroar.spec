@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.26
+Version:        0.27
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
@@ -136,6 +136,9 @@ fi
 
 
 %changelog
+* Sat Oct 01 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-1
+- Upgrade to 0.27
+
 * Tue Aug 02 2011 Andrea Musuruane <musuruan@gmail.com> 0.26-1
 - Upgrade to 0.26
 
