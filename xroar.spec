@@ -1,12 +1,14 @@
 Name:           xroar
 Version:        0.27
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
 URL:            http://www.6809.org.uk/dragon/xroar.shtml
 Source0:        http://www.6809.org.uk/dragon/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
+# Hans de Goede
+Patch0:         %{name}-0.27-lm.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  gtk2-devel
 BuildRequires:  gtkglext-devel
@@ -34,6 +36,7 @@ minimal firmware is included.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -136,6 +139,9 @@ fi
 
 
 %changelog
+* Sun Oct 01 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-2
+- Fix FTBFS for F16+ with a patch by Hans de Goede
+
 * Sat Oct 01 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-1
 - Upgrade to 0.27
 
