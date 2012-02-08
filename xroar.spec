@@ -1,6 +1,6 @@
 Name:           xroar
 Version:        0.27
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
@@ -139,6 +139,9 @@ fi
 
 
 %changelog
+* Wed Feb 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 0.27-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Sun Oct 01 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-2
 - Fix FTBFS for F16+ with a patch by Hans de Goede
 
