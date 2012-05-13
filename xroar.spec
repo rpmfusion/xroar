@@ -1,6 +1,6 @@
 Name:           xroar
-Version:        0.27
-Release:        2%{?dist}
+Version:        0.28
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
@@ -8,7 +8,7 @@ URL:            http://www.6809.org.uk/dragon/xroar.shtml
 Source0:        http://www.6809.org.uk/dragon/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
 # Hans de Goede
-Patch0:         %{name}-0.27-lm.patch
+Patch0:         %{name}-0.28-lm.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  gtk2-devel
 BuildRequires:  gtkglext-devel
@@ -17,7 +17,7 @@ BuildRequires:  libsndfile-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  texinfo
 BuildRequires:  texinfo-tex
-BuildRequires:  ImageMagick
+BuildRequires:  libicns-utils
 BuildRequires:  desktop-file-utils
 Requires:       hicolor-icon-theme
 Requires(post): info
@@ -47,9 +47,6 @@ make %{?_smp_mflags} VERBOSE=1
 make doc/xroar.txt
 make doc/xroar.html
 make doc/xroar.pdf
-
-# Create icon
-convert gp32/icon.bmp -transparent '#000000' %{name}.png
 
 # Generate desktop file
 cat >%{name}.desktop <<EOF
@@ -82,10 +79,19 @@ rm -rf %{buildroot}
 make install DEB_BUILD_OPTIONS=nostrip \
              DESTDIR=%{buildroot}
 
-# Install ROM and icon
-mkdir -p %{buildroot}%{_datadir}/{%{name}/roms,icons/hicolor/32x32/apps}
-install -pm0644 %{name}.png %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
+# Install ROM 
+mkdir -p %{buildroot}%{_datadir}/%{name}/roms
 install -pm0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/roms/dragon-minifirm.rom
+
+# Extract Mac OS X icons
+icns2png -x macosx/%{name}.icns 
+
+# Install icons
+for i in 16 32 48 128; do
+  install -d -m 755 %{buildroot}%{_datadir}/icons/hicolor/${i}x${i}/apps
+  install -m 644 %{name}_${i}x${i}x32.png \
+    %{buildroot}%{_datadir}/icons/hicolor/${i}x${i}/apps/%{name}.png
+done
 
 # Install desktop files
 desktop-file-install \
@@ -130,7 +136,7 @@ fi
 %defattr(-,root,root,-)
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/applications/dribble-%{name}.desktop
 %{_datadir}/applications/dribble-%{name}-minifirm.desktop
 %{_infodir}/%{name}.info*
@@ -139,6 +145,13 @@ fi
 
 
 %changelog
+* Sun May 13 2012 Andrea Musuruane <musuruan@gmail.com> 0.28-1
+- Upgrade to 0.28
+- Use converted macosx icons
+
+* Wed Feb 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 0.27-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Sun Oct 01 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-2
 - Fix FTBFS for F16+ with a patch by Hans de Goede
 
