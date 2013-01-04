@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.28.1
+Version:        0.29.1
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
@@ -46,7 +46,8 @@ make %{?_smp_mflags} VERBOSE=1
 # Build docs
 make doc/xroar.txt
 make doc/xroar.html
-make doc/xroar.pdf
+# Disabled because of BZ 868011
+#make doc/xroar.pdf
 
 # Generate desktop file
 cat >%{name}.desktop <<EOF
@@ -141,10 +142,16 @@ fi
 %{_datadir}/applications/dribble-%{name}-minifirm.desktop
 %{_infodir}/%{name}.info*
 %doc ChangeLog COPYING.GPL COPYING.LGPL-2.1 README 
-%doc doc/%{name}.txt doc/%{name}.html doc/%{name}.pdf doc/%{name}-screens.png
+%doc doc/%{name}.txt 
+%doc doc/%{name}.html doc/%{name}-screens.png
+#%doc doc/%{name}.pdf
 
 
 %changelog
+* Fri Jan 04 2013 Andrea Musuruane <musuruan@gmail.com> 0.29.1-1
+- Upgrade to 0.29.1
+- Disabled PDF generation
+
 * Wed Jun 13 2012 Andrea Musuruane <musuruan@gmail.com> 0.28.1-1
 - Upgrade to 0.28.1
 
@@ -155,7 +162,7 @@ fi
 * Wed Feb 08 2012 Nicolas Chauvet <kwizart@gmail.com> - 0.27-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
-* Sun Oct 01 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-2
+* Sun Oct 02 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-2
 - Fix FTBFS for F16+ with a patch by Hans de Goede
 
 * Sat Oct 01 2011 Andrea Musuruane <musuruan@gmail.com> 0.27-1
