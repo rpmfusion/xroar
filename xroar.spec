@@ -1,6 +1,6 @@
 Name:           xroar
 Version:        0.29.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 Group:          Applications/Emulators
 License:        GPLv2+
@@ -46,8 +46,7 @@ make %{?_smp_mflags} VERBOSE=1
 # Build docs
 make doc/xroar.txt
 make doc/xroar.html
-# Disabled because of BZ 868011
-#make doc/xroar.pdf
+make doc/xroar.pdf
 
 # Generate desktop file
 cat >%{name}.desktop <<EOF
@@ -144,10 +143,13 @@ fi
 %doc ChangeLog COPYING.GPL COPYING.LGPL-2.1 README 
 %doc doc/%{name}.txt 
 %doc doc/%{name}.html doc/%{name}-screens.png
-#%doc doc/%{name}.pdf
+%doc doc/%{name}.pdf
 
 
 %changelog
+* Tue Jan 29 2013 Andrea Musuruane <musuruan@gmail.com> 0.29.1-2
+- Rebuilt for new texinfo (BZ #868011)
+
 * Fri Jan 04 2013 Andrea Musuruane <musuruan@gmail.com> 0.29.1-1
 - Upgrade to 0.29.1
 - Disabled PDF generation
