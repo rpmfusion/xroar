@@ -1,13 +1,11 @@
 Name:           xroar
-Version:        0.29.5
-Release:        2%{?dist}
+Version:        0.30.3
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
 URL:            http://www.6809.org.uk/dragon/xroar.shtml
 Source0:        http://www.6809.org.uk/dragon/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
-# Hans de Goede
-Patch0:         %{name}-0.28-lm.patch
 BuildRequires:  gtk2-devel
 BuildRequires:  gtkglext-devel
 BuildRequires:  SDL_image-devel
@@ -34,10 +32,10 @@ minimal firmware is included.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
+export LDLIBS="-lm"
 %configure
 make %{?_smp_mflags} VERBOSE=1
 
@@ -82,7 +80,7 @@ mkdir -p %{buildroot}%{_datadir}/%{name}/roms
 install -pm0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/roms/dragon-minifirm.rom
 
 # Extract Mac OS X icons
-icns2png -x macosx/%{name}.icns 
+icns2png -x src/macosx/%{name}.icns 
 
 # Install icons
 for i in 16 32 48 128; do
@@ -138,6 +136,9 @@ fi
 
 
 %changelog
+* Tue Oct 01 2013 Andrea Musuruane <musuruan@gmail.com> 0.30.3-1
+- Upgrade to 0.30.3
+
 * Mon Aug 12 2013 Andrea Musuruane <musuruan@gmail.com> 0.29.5-2
 - Dropped obsolete Group, Buildroot, %%clean and %%defattr
 - Dropped desktop vendor tag
