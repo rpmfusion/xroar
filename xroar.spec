@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.30.3
+Version:        0.31
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
@@ -71,7 +71,6 @@ EOF
 
 
 %install
-rm -rf %{buildroot}
 make install DEB_BUILD_OPTIONS=nostrip \
              DESTDIR=%{buildroot}
 
@@ -136,6 +135,10 @@ fi
 
 
 %changelog
+* Sun Dec 01 2013 Andrea Musuruane <musuruan@gmail.com> 0.31-1
+- Upgrade to 0.31
+- Dropped cleaning at the beginning of %%install
+
 * Tue Oct 01 2013 Andrea Musuruane <musuruan@gmail.com> 0.30.3-1
 - Upgrade to 0.30.3
 
