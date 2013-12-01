@@ -1,6 +1,6 @@
 Name:           xroar
 Version:        0.31
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
 URL:            http://www.6809.org.uk/dragon/xroar.shtml
@@ -35,7 +35,6 @@ minimal firmware is included.
 
 
 %build
-export LDLIBS="-lm"
 %configure
 make %{?_smp_mflags} VERBOSE=1
 
@@ -135,6 +134,9 @@ fi
 
 
 %changelog
+* Sun Dec 01 2013 Andrea Musuruane <musuruan@gmail.com> 0.31-2
+- Removed workaround to link against libm
+
 * Sun Dec 01 2013 Andrea Musuruane <musuruan@gmail.com> 0.31-1
 - Upgrade to 0.31
 - Dropped cleaning at the beginning of %%install
