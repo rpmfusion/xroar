@@ -1,10 +1,10 @@
 Name:           xroar
-Version:        0.31
-Release:        2%{?dist}
+Version:        0.31.1
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
-URL:            http://www.6809.org.uk/dragon/xroar.shtml
-Source0:        http://www.6809.org.uk/dragon/%{name}-%{version}.tar.gz
+URL:            http://www.6809.org.uk/xroar/
+Source0:        http://www.6809.org.uk/xroar/download/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
 BuildRequires:  gtk2-devel
 BuildRequires:  gtkglext-devel
@@ -134,6 +134,10 @@ fi
 
 
 %changelog
+* Fri Dec 06 2013 Andrea Musuruane <musuruan@gmail.com> 0.31.1-1
+- Upgrade to 0.31.1
+- Updated Source0 and URL
+
 * Sun Dec 01 2013 Andrea Musuruane <musuruan@gmail.com> 0.31-2
 - Removed workaround to link against libm
 
