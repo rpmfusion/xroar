@@ -1,6 +1,6 @@
 Name:           xroar
-Version:        0.32
-Release:        2%{?dist}
+Version:        0.33.1
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
 URL:            http://www.6809.org.uk/xroar/
@@ -39,9 +39,8 @@ minimal firmware is included.
 make %{?_smp_mflags} VERBOSE=1
 
 # Build docs
-make doc/xroar.txt
-make doc/xroar.html
-make doc/xroar.pdf
+make html
+make pdf
 
 # Generate desktop file
 cat >%{name}.desktop <<EOF
@@ -96,6 +95,8 @@ desktop-file-install \
   --dir %{buildroot}%{_datadir}/applications \
   %{name}-minifirm.desktop
 
+rm -f %{buildroot}%{_infodir}/dir
+
 
 %post
 /sbin/install-info %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
@@ -127,13 +128,16 @@ fi
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/applications/%{name}-minifirm.desktop
 %{_infodir}/%{name}*
+%{_mandir}/man1/%{name}.1*
 %doc ChangeLog COPYING.GPL COPYING.LGPL-2.1 README 
-%doc doc/%{name}.txt 
-%doc doc/%{name}.html doc/%{name}-screens.png
+%doc doc/%{name}.html doc/%{name}-screens.png doc/%{name}-timebandit-af.png
 %doc doc/%{name}.pdf
 
 
 %changelog
+* Sun May 24 2015 Andrea Musuruane <musuruan@gmail.com> 0.33.1-1
+- Upgrade to 0.33.1
+
 * Mon Sep 01 2014 Sérgio Basto <sergio@serjux.com> - 0.32-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
