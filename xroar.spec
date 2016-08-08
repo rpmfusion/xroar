@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.33.1
+Version:        0.34
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
@@ -8,9 +8,10 @@ Source0:        http://www.6809.org.uk/xroar/download/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
 BuildRequires:  gtk2-devel
 BuildRequires:  gtkglext-devel
-BuildRequires:  SDL_image-devel
+BuildRequires:  SDL2-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  pulseaudio-libs-devel
+BuildRequires:  zlib-devel
 BuildRequires:  texinfo
 BuildRequires:  texinfo-tex
 BuildRequires:  libicns-utils
@@ -135,6 +136,9 @@ fi
 
 
 %changelog
+* Mon Aug 08 2016 Andrea Musuruane <musuruan@gmail.com> 0.34-1
+- Upgrade to 0.34
+
 * Sun May 24 2015 Andrea Musuruane <musuruan@gmail.com> 0.33.1-1
 - Upgrade to 0.33.1
 
