@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.34.1
+Version:        0.34.3
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
@@ -36,8 +36,8 @@ minimal firmware is included.
 
 
 %build
-%configure
-make %{?_smp_mflags} VERBOSE=1
+%configure --without-oss
+%make_build
 
 # Build docs
 make html
@@ -70,8 +70,7 @@ EOF
 
 
 %install
-make install DEB_BUILD_OPTIONS=nostrip \
-             DESTDIR=%{buildroot}
+%make_install DEB_BUILD_OPTIONS=nostrip
 
 # Install ROM 
 mkdir -p %{buildroot}%{_datadir}/%{name}/roms
@@ -130,12 +129,16 @@ fi
 %{_datadir}/applications/%{name}-minifirm.desktop
 %{_infodir}/%{name}*
 %{_mandir}/man1/%{name}.1*
-%doc ChangeLog COPYING.GPL COPYING.LGPL-2.1 README 
+%license COPYING.GPL COPYING.LGPL-2.1
+%doc ChangeLog README
 %doc doc/%{name}.html doc/%{name}-screens.png doc/%{name}-timebandit-af.png
 %doc doc/%{name}.pdf
 
 
 %changelog
+* Sat Aug 27 2016 Andrea Musuruane <musuruan@gmail.com> 0.34.3-1
+- Upgrade to 0.34.3
+
 * Sat Aug 13 2016 Andrea Musuruane <musuruan@gmail.com> 0.34.1-1
 - Upgrade to 0.34.1
 
