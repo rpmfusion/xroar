@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=XRoar
+GenericName=Dragon 32/64 Emulator
+Comment=Emulates the Dragon 32/64 and Tandy CoCo
+Exec=xroar
+Icon=xroar
+Terminal=false
+Type=Application
+Categories=Game;Emulator;
+

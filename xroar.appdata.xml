@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2018 Andrea Musuruane <musuruan@gmail.com -->
+<component type="desktop">
+  <id>xroar.desktop</id>
+  <metadata_license>CC-BY-SA-3.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>XRoar</name>
+  <summary>A Dragon 32, Dragon 64 and Tandy CoCo emulator</summary>
+  <description>
+    <p>
+      XRoar is a Dragon 32, Dragon 64 and Tandy CoCo emulator. It uses
+      standard cassette images (".cas" files) and virtual diskettes (".dsk"
+      or ".vdk" files) but has its own snapshot format at the moment (no
+      ".pak" file support).
+    </p>
+    <p>
+      ROM images of the firmware are required for full emulation but a 3rd 
+      party minimal firmware is included.
+    </p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>http://www.6809.org.uk/xroar/images/aquanaut471.png</image>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">http://www.6809.org.uk/xroar/</url>
+</component>

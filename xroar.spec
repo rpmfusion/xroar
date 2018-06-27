@@ -1,11 +1,15 @@
 Name:           xroar
 Version:        0.34.8
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv2+
 URL:            http://www.6809.org.uk/xroar/
 Source0:        http://www.6809.org.uk/xroar/download/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
+Source2:        %{name}.desktop
+Source3:        %{name}-minifirm.desktop
+Source4:        %{name}.appdata.xml
+BuildRequires:  gcc
 BuildRequires:  gtk2-devel
 BuildRequires:  gtkglext-devel
 BuildRequires:  SDL2-devel
@@ -15,17 +19,15 @@ BuildRequires:  zlib-devel
 BuildRequires:  texinfo
 BuildRequires:  texinfo-tex
 BuildRequires:  libicns-utils
+BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
 Requires:       hicolor-icon-theme
-Requires(post): info
-Requires(preun): info
 
 
 %description
-A Dragon 32, Dragon 64 and Tandy CoCo emulator for Unix, Linux, GP32, MacOS X
-and Windows32. It uses standard cassette images (".cas" files) and virtual
-diskettes (".dsk" or ".vdk" files) but has its own snapshot format at the
-moment (no ".pak" file support).
+XRoar is a Dragon 32, Dragon 64 and Tandy CoCo emulator. It uses standard
+cassette images (".cas" files) and virtual diskettes (".dsk" or ".vdk" files)
+but has its own snapshot format at the moment (no ".pak" file support).
 
 ROM images of the firmware are required for full emulation but a 3rd party
 minimal firmware is included.
@@ -43,38 +45,13 @@ minimal firmware is included.
 make html
 make pdf
 
-# Generate desktop file
-cat >%{name}.desktop <<EOF
-[Desktop Entry]
-Name=XRoar
-GenericName=Dragon 32/64 Emulator
-Comment=Emulates the Dragon 32/64 and Tandy CoCo
-Exec=%{name}
-Icon=%{name}
-Terminal=false
-Type=Application
-Categories=Game;Emulator;
-EOF
-
-cat >%{name}-minifirm.desktop <<EOF
-[Desktop Entry]
-Name=XRoar [Minimal Firmware]
-GenericName=Dragon 32/64 Emulator
-Comment=Emulates the Dragon 32/64 and Tandy CoCo
-Exec=%{name} -extbas %{_datadir}/%{name}/roms/dragon-minifirm.rom
-Icon=%{name}
-Terminal=false
-Type=Application
-Categories=Game;Emulator;
-EOF
-
 
 %install
 %make_install DEB_BUILD_OPTIONS=nostrip
 
 # Install ROM 
-mkdir -p %{buildroot}%{_datadir}/%{name}/roms
-install -pm0644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/roms/dragon-minifirm.rom
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/roms
+install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/%{name}/roms/dragon-minifirm.rom
 
 # Extract Mac OS X icons
 icns2png -x src/macosx/%{name}.icns 
@@ -89,36 +66,18 @@ done
 # Install desktop files
 desktop-file-install \
   --dir %{buildroot}%{_datadir}/applications \
-  %{name}.desktop
+  %{SOURCE2}
 
 desktop-file-install \
   --dir %{buildroot}%{_datadir}/applications \
-  %{name}-minifirm.desktop
+  %{SOURCE3}
+
+# Install AppData file
+install -d -m 755 %{buildroot}%{_datadir}/metainfo
+install -p -m 644 %{SOURCE4} %{buildroot}%{_datadir}/metainfo
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata.xml
 
 rm -f %{buildroot}%{_infodir}/dir
-
-
-%post
-/sbin/install-info %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
-
-touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-
-%postun
-if [ $1 -eq 0 ] ; then
-    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-
-%posttrans
-gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
-
-%preun
-if [ $1 = 0 ] ; then
-  /sbin/install-info --delete %{_infodir}/%{name}.info.gz %{_infodir}/dir || :
-fi
 
 
 %files
@@ -127,6 +86,7 @@ fi
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/applications/%{name}-minifirm.desktop
+%{_datadir}/metainfo/%{name}.appdata.xml
 %{_infodir}/%{name}*
 %{_mandir}/man1/%{name}.1*
 %license COPYING.GPL COPYING.LGPL-2.1
@@ -136,6 +96,11 @@ fi
 
 
 %changelog
+* Tue Jun 26 2018 Andrea Musuruane <musuruan@gmail.com> - 0.34.8-3
+- Added gcc dependency
+- Dropped obsolete scriptlets
+- Added AppData file
+
 * Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.34.8-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 

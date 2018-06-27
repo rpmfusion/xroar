@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=XRoar [Minimal Firmware]
+GenericName=Dragon 32/64 Emulator
+Comment=Emulates the Dragon 32/64 and Tandy CoCo
+Exec=xroar -extbas /usr/share/xroar/roms/dragon-minifirm.rom
+Icon=xroar
+Terminal=false
+Type=Application
+Categories=Game;Emulator;
+
