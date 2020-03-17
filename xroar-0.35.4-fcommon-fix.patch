@@ -1,0 +1,24 @@
+diff -up xroar-0.35.4/src/vdisk.h~ xroar-0.35.4/src/vdisk.h
+--- xroar-0.35.4/src/vdisk.h~	2019-03-29 07:51:23.000000000 +0100
++++ xroar-0.35.4/src/vdisk.h	2020-03-17 19:26:09.442092064 +0100
+@@ -40,7 +40,7 @@ enum vdisk_err {
+ 	vdisk_err_idam_crc,
+ 	vdisk_err_data_crc,
+ 	vdisk_err_max
+-} vdisk_errno;
++};
+ 
+ /*
+  * If write_back is not set, the image file will not be updated when the disk
+diff -up xroar-0.35.4/src/vdisk.c~ xroar-0.35.4/src/vdisk.c
+--- xroar-0.35.4/src/vdisk.c~	2019-05-13 21:43:11.000000000 +0200
++++ xroar-0.35.4/src/vdisk.c	2020-03-17 19:38:01.041359792 +0100
+@@ -100,6 +100,8 @@ static const uint8_t vdk_header[12] = {
+ 	0x00,  // name length & compression flag, populated later
+ };
+ 
++static enum vdisk_err vdisk_errno;
++
+ const char *vdisk_strerror(int errnum) {
+ 	if (errnum < 0 || errnum > vdisk_err_max)
+ 		errnum = vdisk_err_max;
