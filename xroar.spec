@@ -1,15 +1,14 @@
 Name:           xroar
-Version:        0.35.4
-Release:        4%{?dist}
+Version:        0.36
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
-License:        GPLv2+
+License:        GPLv3+
 URL:            http://www.6809.org.uk/xroar/
 Source0:        http://www.6809.org.uk/xroar/download/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
 Source2:        %{name}.desktop
 Source3:        %{name}-minifirm.desktop
 Source4:        %{name}.appdata.xml
-Patch1:         xroar-0.35.4-fcommon-fix.patch
 BuildRequires:  gcc
 BuildRequires:  gtk2-devel
 BuildRequires:  gtkglext-devel
@@ -35,7 +34,7 @@ minimal firmware is included.
 
 
 %prep
-%autosetup -p1
+%autosetup
 
 
 %build
@@ -74,9 +73,9 @@ desktop-file-install \
   %{SOURCE3}
 
 # Install AppData file
-install -d -m 755 %{buildroot}%{_datadir}/metainfo
-install -p -m 644 %{SOURCE4} %{buildroot}%{_datadir}/metainfo
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata.xml
+install -d -m 755 %{buildroot}%{_metainfodir}
+install -p -m 644 %{SOURCE4} %{buildroot}%{_metainfodir}
+appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
 rm -f %{buildroot}%{_infodir}/dir
 
@@ -87,16 +86,19 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/applications/%{name}-minifirm.desktop
-%{_datadir}/metainfo/%{name}.appdata.xml
+%{_metainfodir}/%{name}.appdata.xml
 %{_infodir}/%{name}*
 %{_mandir}/man1/%{name}.1*
-%license COPYING.GPL COPYING.LGPL-2.1
-%doc ChangeLog README
+%license COPYING.GPL COPYING.LGPL
+%doc ChangeLog README README.SDS
 %doc doc/%{name}.html doc/%{name}-screens.png doc/%{name}-timebandit-af.png
 %doc doc/%{name}.pdf
 
 
 %changelog
+* Sat Jun 13 2020 Andrea Musuruane <musuruan@gmail.com> - 0.36-1
+- Updated to new upstream release
+
 * Tue Mar 17 2020 Hans de Goede <j.w.r.degoede@gmail.com> - 0.35.4-4
 - Fix FTBFS
 
