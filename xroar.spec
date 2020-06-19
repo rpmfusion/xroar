@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        0.36
+Version:        0.36.1
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv3+
@@ -96,6 +96,9 @@ rm -f %{buildroot}%{_infodir}/dir
 
 
 %changelog
+* Fri Jun 19 2020 Andrea Musuruane <musuruan@gmail.com> - 0.36.1-1
+- Updated to new upstream release
+
 * Sat Jun 13 2020 Andrea Musuruane <musuruan@gmail.com> - 0.36-1
 - Updated to new upstream release
 
