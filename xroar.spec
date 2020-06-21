@@ -11,7 +11,7 @@ Source3:        %{name}-minifirm.desktop
 Source4:        %{name}.appdata.xml
 BuildRequires:  gcc
 BuildRequires:  gtk2-devel
-%if 0%{?fedora} > 33
+%if 0%{?fedora} < 33
 BuildRequires:  gtkglext-devel
 %endif
 BuildRequires:  SDL2-devel
