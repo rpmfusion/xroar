@@ -1,6 +1,6 @@
 Name:           xroar
-Version:        0.36.1
-Release:        2%{?dist}
+Version:        0.36.2
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv3+
 URL:            http://www.6809.org.uk/xroar/
@@ -98,6 +98,9 @@ rm -f %{buildroot}%{_infodir}/dir
 
 
 %changelog
+* Sun Aug 09 2020 Andrea Musuruane <musuruan@gmail.com> - 0.36.2-1
+- Updated to new upstream release
+
 * Sun Jun 21 2020 Leigh Scott <leigh123linux@gmail.com> - 0.36.1-2
 - pangox has been retired for F33 so disable gtkglext support
 
