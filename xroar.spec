@@ -1,6 +1,6 @@
 Name:           xroar
-Version:        0.36.2
-Release:        3%{?dist}
+Version:        0.37
+Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv3+
 URL:            http://www.6809.org.uk/xroar/
@@ -10,6 +10,7 @@ Source2:        %{name}.desktop
 Source3:        %{name}-minifirm.desktop
 Source4:        %{name}.appdata.xml
 BuildRequires:  gcc
+BuildRequires:  make
 BuildRequires:  gtk2-devel
 %if 0%{?fedora} < 33
 BuildRequires:  gtkglext-devel
@@ -98,6 +99,9 @@ rm -f %{buildroot}%{_infodir}/dir
 
 
 %changelog
+* Sat Aug 21 2021 Andrea Musuruane <musuruan@gmail.com> - 0.37-1
+- new version
+
 * Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.36.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
