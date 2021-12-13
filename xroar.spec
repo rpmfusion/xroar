@@ -1,10 +1,10 @@
 Name:           xroar
-Version:        1.0.2
+Version:        1.0.4
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv3+
 URL:            http://www.6809.org.uk/xroar/
-Source0:        http://www.6809.org.uk/xroar/download/%{name}-%{version}.tar.gz
+Source0:        http://www.6809.org.uk/xroar/dl/%{name}-%{version}.tar.gz
 Source1:        http://www.6809.org.uk/dragon/dragon.rom
 Source2:        %{name}.desktop
 Source3:        %{name}-minifirm.desktop
@@ -98,6 +98,9 @@ rm -f %{buildroot}%{_infodir}/dir
 
 
 %changelog
+* Sun Dec 12 2021 Andrea Musuruane <musuruan@gmail.com> - 1.0.4-1
+- new version
+
 * Fri Nov 26 2021 Andrea Musuruane <musuruan@gmail.com> - 1.0.2-1
 - new version
 
