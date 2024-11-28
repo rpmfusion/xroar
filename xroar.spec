@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        1.6.6
+Version:        1.7.1
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv3+
@@ -11,8 +11,7 @@ Source3:        %{name}-minifirm.desktop
 Source4:        %{name}.appdata.xml
 BuildRequires:  gcc
 BuildRequires:  make
-BuildRequires:  gtk2-devel
-BuildRequires:  gtkglext-devel
+BuildRequires:  gtk3-devel
 BuildRequires:  SDL2-devel
 BuildRequires:  SDL2_image-devel
 BuildRequires:  libpng-devel
@@ -99,6 +98,9 @@ rm -f %{buildroot}%{_infodir}/dir
 
 
 %changelog
+* Tue Nov 26 2024 Andrea Musuruane <musuruan@gmail.com> - 1.7.1-1
+- new version
+
 * Tue Oct 22 2024 Andrea Musuruane <musuruan@gmail.com> - 1.6.6-1
 - new version
 
