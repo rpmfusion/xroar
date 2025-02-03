@@ -1,0 +1,11 @@
+diff -durN xroar-1.8.1.orig/src/sdl2/common.c xroar-1.8.1/src/sdl2/common.c
+--- xroar-1.8.1.orig/src/sdl2/common.c	2025-01-30 19:24:25.000000000 +0100
++++ xroar-1.8.1/src/sdl2/common.c	2025-02-03 10:19:54.551686852 +0100
+@@ -20,6 +20,7 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <ctype.h>
+ 
+ #include <SDL.h>
+ 
