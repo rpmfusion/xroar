@@ -1,5 +1,5 @@
 Name:           xroar
-Version:        1.8.1
+Version:        1.8.2
 Release:        1%{?dist}
 Summary:        A Dragon 32, Dragon 64 and Tandy CoCo emulator
 License:        GPLv3+
@@ -9,8 +9,6 @@ Source1:        http://www.6809.org.uk/dragon/dragon.rom
 Source2:        %{name}.desktop
 Source3:        %{name}-minifirm.desktop
 Source4:        %{name}.appdata.xml
-# Fix compiling with GCC15
-Patch0:         %{name}-1.8.1-gcc15.patch
 BuildRequires:  gcc
 BuildRequires:  make
 BuildRequires:  gtk3-devel
@@ -100,6 +98,9 @@ rm -f %{buildroot}%{_infodir}/dir
 
 
 %changelog
+* Fri Feb 14 2025 Andrea Musuruane <musuruan@gmail.com> - 1.8.2-1
+- new version
+
 * Sun Feb 02 2025 Andrea Musuruane <musuruan@gmail.com> - 1.8.1-1
 - new version
 
